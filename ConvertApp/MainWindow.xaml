@@ -1,0 +1,76 @@
+﻿<Window x:Class="ConvertApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:ConvertApp.ViewModel"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="Currency Converter" WindowStartupLocation="CenterScreen" >
+    <Window.DataContext>
+        <viewmodels:MainViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.8*"/>
+            <ColumnDefinition Width="1.4*"/>
+            <ColumnDefinition Width="1.1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Command="{Binding Refresh}" Width="160" Height="30" Content="Обновить курс на сегодня" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+            <Button Command="{Binding Search}" Width="160" Height="30" Content="Поиск" Grid.Row="1" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="20,0,0,0"/>
+            <extToolkit:WatermarkTextBox Text="{Binding Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Watermark="Введите валюту для поиска" VerticalAlignment="Center" FontSize="20" Grid.Row="2" Grid.ColumnSpan="2" />
+            <TextBlock Text="{Binding num3, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" FontSize="20" Grid.Row="3" Grid.Column="0" />
+            <TextBlock Text="к рублю" FontSize="20" Grid.Row="3" Grid.Column="1" />
+            <TextBlock Text="{Binding num4, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" FontSize="20" Grid.Row="4" Grid.Column="0"  />
+            <TextBlock Text="к доллару" FontSize="20" Grid.Row="4" Grid.Column="1" />
+
+        </Grid>
+
+        <Grid Grid.Column="1">
+        <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <DataGrid Name="grid" 
+                  ItemsSource="{Binding Path=ValutList}" 
+                  HorizontalAlignment="Stretch" CanUserAddRows="False" CanUserDeleteRows="False" 
+                  VerticalAlignment="Stretch" Width="Auto" Height="Auto"
+                  Grid.Row="0" Grid.Column="0" IsReadOnly="True"></DataGrid>
+        </Grid>
+    
+    <Grid Grid.Column="2" Margin="5,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="1" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <ComboBox ItemsSource="{Binding ValutList}" SelectedValue="{Binding FirstValut}" FontSize="20" Grid.Row="1" DisplayMemberPath="Name" />
+            <TextBox Text="{Binding num1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  FontSize="20" Grid.Row="3" />
+            <Button Command="{Binding Swap}" Width="40" Height="40" Grid.Row="4" Background="White" BorderThickness="0">
+                <Image  Source="Images/arrows.png"/>
+            </Button>
+            <ComboBox ItemsSource="{Binding ValutList}" SelectedValue="{Binding SecondValut}" FontSize="20" DisplayMemberPath="Name" Grid.Row="5"/>
+            <TextBox Text="{Binding num2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" FontSize="20" Grid.Row="6" />
+            <TextBlock Grid.Row="2"/>
+        </Grid>
+        
+    </Grid>
+</Window>
